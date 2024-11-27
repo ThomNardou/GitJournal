@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -26,6 +27,11 @@
   "author": "pk88yte",
   "license": "MIT",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "@octokit/rest": "^21.0.2",
+    "axios": "^1.7.8",
+    "dotenv": "^16.4.5",
+    "electron-oauth-helper": "^5.1.1",
+    "electron-squirrel-startup": "^1.0.1",
+    "simple-oauth2": "^5.1.0"
   }
 }
