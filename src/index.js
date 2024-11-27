@@ -33,16 +33,30 @@ const startServer = () => {
 
       const token = url.searchParams.get('code');
 
-      
+      auth.getToken({
+        code: token,
+        redirect_uri: 'http://localhost:3000/redirect',
+      })
+      .then((response) => {
+        let pat = response.token.access_token;
 
-      if (token) {
-        res.setHeader(200, { 'Content-Type': 'text/plain' });
-        res.end(`Token: ${token}`);
-      }
-      else {
-        res.setHeader(400, { 'Content-Type': 'text/plain' });
-        res.end('Token not found');
-      }
+        if (pat) {
+          console.log('Token:', pat);
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'text/plain');
+          res.end(`Token: ${JSON.stringify(pat)}`);
+        } else {
+          res.statusCode = 404;
+          res.setHeader('Content-Type', 'text/plain');
+          res.end('Token not found');
+        }
+      })
+      .catch((error) => {
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end(`Error: ${error}`);
+      });
+
 
     }
   })
@@ -58,9 +72,9 @@ const startServer = () => {
 app.whenReady().then(() => {
   try {
     const code = connectToGithub();
-    const token = generatePAT(code);
+    // const token = generatePAT(code);
 
-    console.log('Token:', token);
+    console.log('Token:', code);
   }
   catch (error) {
     console.error('Error:', error);
