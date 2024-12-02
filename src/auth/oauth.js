@@ -2,7 +2,7 @@ import { BrowserWindow } from "electron";
 import { Octokit } from "@octokit/rest";
 import dotenv from "dotenv";
 import { AuthorizationCode } from 'simple-oauth2';
-import axios from "axios";
+import { startServer } from "../index.js"
 
 dotenv.config();
 
@@ -21,21 +21,16 @@ const auth = new AuthorizationCode({
   }
 });
 
-const connectToGithub = async () => {
-  const window = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: false,
-    },
-  });
+const connectToGithub = async (mainWindow) => {
 
   const authUri = auth.authorizeURL({
     redirect_uri: "http://localhost:3000/redirect",
     scope: "repo read:user write:repo_hook",
   });
 
-  window.loadURL(authUri);
+  mainWindow.loadURL(authUri);
+
+  startServer(mainWindow);
 
 }
 
