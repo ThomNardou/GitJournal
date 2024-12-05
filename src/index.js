@@ -4,9 +4,11 @@ import { dirname } from 'node:path';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import http from 'http';
-import { connectToGithub, generatePAT, auth } from './auth/oauth.js';
+import { connectToGithub, auth } from './auth/oauth.js';
 import fs from 'fs';
+import {GetAllRepos} from "./services/GetAllRepos.js";
 
+var TOKEN = "";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -30,7 +32,8 @@ const startServer = (mainWindow) => {
   
         const accessToken = code.token.access_token;
 
-        fs.writeFileSync('token.json', JSON.stringify(accessToken));
+        TOKEN = accessToken
+        // fs.writeFileSync('token.json', JSON.stringify(accessToken));
   
         res.end('Token generated');
       }
@@ -80,8 +83,10 @@ app.on('window-all-closed', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.handle('get-token', (event, args) => {
-  return fs.readFileSync('token.json', 'utf-8');
+ipcMain.handle('get-repos', (event, args) => {
+  return GetAllRepos(TOKEN)
 })
+
+
 
 export { startServer };

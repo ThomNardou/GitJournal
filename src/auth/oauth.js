@@ -56,4 +56,4 @@ const generatePAT = async (token) => {
   }
 };
 
-export { connectToGithub, generatePAT, auth };
+export { connectToGithub, auth };
