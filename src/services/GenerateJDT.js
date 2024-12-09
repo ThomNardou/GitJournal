@@ -5,23 +5,33 @@ const generateJDT = async (commitList, reposName) => {
     const HEADER_ROW = [
         {
             value: "Author",
-            type: String
+            type: String,
+            fontWeight: 'bold'
         },
         {
             value: "Date",
-            type: String
+            type: String,
+            fontWeight: 'bold'
         },
         {
             value: "Message",
-            type: String
+            type: String,
+            fontWeight: 'bold'
         },
         {
             value: "Status",
-            type: String
+            type: String,
+            fontWeight: 'bold'
         },
         {
             value: "temps passé",
-            type: String
+            type: String,
+            fontWeight: 'bold'
+        },
+        {
+            value: "Commentaire",
+            type: String,
+            fontWeight: 'bold'
         }
     ]
 
@@ -31,10 +41,22 @@ const generateJDT = async (commitList, reposName) => {
         let message = commit.commit.message.split("\n");
         let status = "Non indiqué";
         let time = "Non indiqué";
+        let comment = "";
 
         if (message.length >= 3) {
             status = message[2].split("-")[1];
             time = message[2].split("-")[0];
+        }
+
+        let statusArray = status.split(" ");
+        status = statusArray[0]
+
+        if (statusArray.length > 1) {
+            comment = statusArray.slice(1).join(" ");
+        }
+        else {
+            status = "Non indiqué";
+            comment = "Non indiqué";
         }
 
         ROWS.push([
@@ -42,7 +64,8 @@ const generateJDT = async (commitList, reposName) => {
             { value: commit.commit.author.date, type: String },
             { value: message[0], type: String },
             { value: status, type: String },
-            { value: time, type: String }
+            { value: time, type: String },
+            { value: comment, type: String }
         ]);
     }
 
