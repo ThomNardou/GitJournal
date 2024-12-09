@@ -5,8 +5,9 @@ import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import http from 'http';
 import { connectToGithub, auth } from './auth/oauth.js';
-import fs from 'fs';
 import {GetAllRepos} from "./services/GetAllRepos.js";
+import GetReposCommits from "./services/GetReposCommits.js";
+import generateJDT from "./services/GenerateJDT.js";
 
 var TOKEN = "";
 
@@ -85,6 +86,16 @@ app.on('window-all-closed', () => {
 
 ipcMain.handle('get-repos', (event, args) => {
   return GetAllRepos(TOKEN)
+})
+
+ipcMain.handle('get-token', (event, args) => {
+  return TOKEN
+})
+
+ipcMain.handle('get-commits', async (event, args) => {
+    const commits = await GetReposCommits(TOKEN, args.name, args.owner)
+    generateJDT(commits, args.name)
+
 })
 
 

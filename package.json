@@ -32,6 +32,7 @@
     "dotenv": "^16.4.5",
     "electron-oauth-helper": "^5.1.1",
     "electron-squirrel-startup": "^1.0.1",
-    "simple-oauth2": "^5.1.0"
+    "simple-oauth2": "^5.1.0",
+    "write-excel-file": "^2.0.10"
   }
 }

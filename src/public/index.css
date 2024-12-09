@@ -1,11 +1,46 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
-  background: #2d2d2d;
+    background: #2d2d2d;
 }
 
 .reposDiv {
-  padding: 20px;
-  margin: 30px;
-  border-bottom: solid 1px #535252;
+    padding: 20px;
+    border-bottom: solid 1px #535252;
+}
+
+.reposDiv a {
+    color: #fff;
+    background-color: blue;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-left: 10px;
+    width: 150px;
+    height: 45px;
+}
+
+.reposDiv a:hover {
+    background-color: #1e90ff;
+    transition: .35s;
+}
+
+.reposDiv button {
+    color: #fff;
+    background-color: red;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-left: 10px;
+    width: 150px;
+    height: 45px;
+}
+
+.reposDiv p {
+    color: #fff;
+    margin: 40px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
 }
