@@ -9,29 +9,12 @@ body {
     border-bottom: solid 1px #535252;
 }
 
-.reposDiv a {
+.reposDiv button {
     color: #fff;
     background-color: blue;
     border: none;
     padding: 10px 15px;
     border-radius: 10px;
-    margin-left: 10px;
-    width: 150px;
-    height: 45px;
-}
-
-.reposDiv a:hover {
-    background-color: #1e90ff;
-    transition: .35s;
-}
-
-.reposDiv button {
-    color: #fff;
-    background-color: red;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 10px;
-    margin-left: 10px;
     width: 150px;
     height: 45px;
 }
@@ -39,6 +22,10 @@ body {
 .reposDiv p {
     color: #fff;
     margin: 40px 0;
+}
+
+.reposDiv h2 {
+    color: white;
 }
 
 h1, h2, h3, h4, h5, h6 {

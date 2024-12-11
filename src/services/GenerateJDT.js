@@ -73,7 +73,15 @@ const generateJDT = async (commitList, reposName) => {
 
     const user = os.userInfo().username;
 
-    await writeXlsxFile(DATA, { filePath: `C:\\Users\\${user}\\Documents\\${reposName}-JDT.xlsx` })
+    try {
+        await writeXlsxFile(DATA, { filePath: `C:\\Users\\${user}\\Documents\\${reposName}-JDT.xlsx` })
+        return true;
+    }
+    catch (e) {
+        console.log("GENERATEJDT : ", e);
+        return false;
+    }
+
 
 
 

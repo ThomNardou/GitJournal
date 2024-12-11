@@ -94,7 +94,17 @@ ipcMain.handle('get-token', (event, args) => {
 
 ipcMain.handle('get-commits', async (event, args) => {
     const commits = await GetReposCommits(TOKEN, args.name, args.owner)
-    generateJDT(commits, args.name)
+
+    if (commits.length > 0) {
+      const hasBeenGenerated = await generateJDT(commits, args.name)
+
+      if (hasBeenGenerated) {
+        return "Fichier généré avec succès"
+      }
+      else {
+        return "Erreur lors de la génération du fichier"
+      }
+    }
 
 })
 
