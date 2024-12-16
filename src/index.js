@@ -4,6 +4,7 @@ import { dirname } from 'node:path';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import http from 'http';
+import os from 'os'
 import { connectToGithub, auth } from './auth/oauth.js';
 import {GetAllRepos} from "./services/GetAllRepos.js";
 import GetReposCommits from "./services/GetReposCommits.js";
@@ -56,8 +57,8 @@ const startServer = (mainWindow) => {
 
 app.on('ready', () => {
   let mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -99,7 +100,7 @@ ipcMain.handle('get-commits', async (event, args) => {
       const hasBeenGenerated = await generateJDT(commits, args.name)
 
       if (hasBeenGenerated) {
-        return "Fichier généré avec succès"
+        return `Fichier généré avec succès. Vous pouvez le retrouver dans C:\\Users\\${os.userInfo().username}\\Documents\\${args.name}-JDT.xlsx`
       }
       else {
         return "Erreur lors de la génération du fichier"

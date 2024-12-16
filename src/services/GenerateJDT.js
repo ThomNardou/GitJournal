@@ -38,34 +38,62 @@ const generateJDT = async (commitList, reposName) => {
     const ROWS = []
 
     for (let commit of commitList) {
-        let message = commit.commit.message.split("\n");
-        let status = "Non indiqué";
-        let time = "Non indiqué";
-        let comment = "";
 
-        if (message.length >= 3) {
-            status = message[2].split("-")[1];
-            time = message[2].split("-")[0];
+        // console.log(commit);
+        let commitName = "";
+        let commitDescription = "";
+        let JDTInfos = "";
+        let workComment = "";
+        let message = commit.commit.message.split("\n");
+
+        let workInfos = {
+            time: "",
+            status: "",
+            issue: "",
         }
 
-        let statusArray = status.split(" ");
-        status = statusArray[0]
+        console.log("message : ", message);
 
-        if (statusArray.length > 1) {
-            comment = statusArray.slice(1).join(" ");
+        if (message.length > 1) {
+            commitName = message[0];
+            commitDescription = message[2];
         }
         else {
-            status = "Non indiqué";
-            comment = "Non indiqué";
+            commitName = message[0];
+            workInfos.time = "Non indiqué";
+            workInfos.status = "Non indiqué";
+            workInfos.issue = "Non indiqué";
         }
+
+        if (commitDescription) {
+            const jdts = commitDescription.split(" ");
+            if (jdts.length > 1) {
+                JDTInfos = jdts[0];
+                workComment = jdts.slice(1).join(" ") ? jdts.slice(1).join(" ") : "Non indiqué";
+                workInfos.time = JDTInfos.split("-")[0];
+                workInfos.status = JDTInfos.split("-")[1];
+                workInfos.issue = JDTInfos.split("-")[2] ? JDTInfos.split("-")[2] : "Non indiqué";
+            }
+        }
+
+        // let statusArray = status.split(" ");
+        // status = statusArray[0]
+        //
+        // if (statusArray.length > 1) {
+        //     comment = statusArray.slice(1).join(" ");
+        // }
+        // else {
+        //     status = "Non indiqué";
+        //     comment = "Non indiqué";
+        // }
 
         ROWS.push([
             { value: commit.commit.author.name, type: String },
             { value: commit.commit.author.date, type: String },
-            { value: message[0], type: String },
-            { value: status, type: String },
-            { value: time, type: String },
-            { value: comment, type: String }
+            { value: commitName, type: String },
+            { value: workInfos.status, type: String },
+            { value: workInfos.status, type: String },
+            { value: workComment, type: String }
         ]);
     }
 
