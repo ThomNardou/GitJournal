@@ -1,11 +1,10 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import { fileURLToPath } from 'node:url';
-import { dirname } from 'node:path';
-import path from 'node:path';
+import {app, BrowserWindow, ipcMain} from 'electron';
+import {fileURLToPath} from 'node:url';
+import path, {dirname} from 'node:path';
 import started from 'electron-squirrel-startup';
 import http from 'http';
 import os from 'os'
-import { connectToGithub, auth } from './auth/oauth.js';
+import {auth, connectToGithub} from './auth/oauth.js';
 import {GetAllRepos} from "./services/GetAllRepos.js";
 import GetReposCommits from "./services/GetReposCommits.js";
 import generateJDT from "./services/GenerateJDT.js";
@@ -31,10 +30,8 @@ const startServer = (mainWindow) => {
           code: token,
           redirect_uri: 'http://localhost:3000/redirect',
         });
-  
-        const accessToken = code.token.access_token;
 
-        TOKEN = accessToken
+      TOKEN = code.token.access_token
         // fs.writeFileSync('token.json', JSON.stringify(accessToken));
   
         res.end('Token generated');
@@ -43,9 +40,9 @@ const startServer = (mainWindow) => {
         console.error('Error while generating token:', error);
       }
 
-      server.close();
 
-      mainWindow.loadFile(path.join(__dirname, 'index.html'));
+      await mainWindow.loadFile(path.join(__dirname, 'index.html'));
+      server.close();
     }
   })
 
