@@ -19,11 +19,17 @@ if (started) {
 }
 
 const startServer = (mainWindow) => {
-  const server = http.createServer( async (req, res) => {
+  const server = http.createServer(async (req, res) => {
     if (req.url?.startsWith('/redirect')) {
       const url = new URL(req.url, 'http://localhost:3000');
 
       const token = url.searchParams.get('code');
+
+      if (!token) {
+        res.statusCode = 400;
+        res.end('Invalid request: missing code');
+        return;
+      }
 
       try {
         const code = await auth.getToken({
@@ -31,20 +37,22 @@ const startServer = (mainWindow) => {
           redirect_uri: 'http://localhost:3000/redirect',
         });
 
-      TOKEN = code.token.access_token
-        // fs.writeFileSync('token.json', JSON.stringify(accessToken));
-  
-        res.end('Token generated');
-      }
-      catch (error) {
+        TOKEN = code.token.access_token;
+
+        res.end('Token generated successfully');
+        await mainWindow.loadFile(path.join(__dirname, 'index.html'));
+      } catch (error) {
         console.error('Error while generating token:', error);
+        res.statusCode = 500;
+        res.end('Internal Server Error');
+      } finally {
+        server.close(() => console.log('Server closed.'));
       }
-
-
-      await mainWindow.loadFile(path.join(__dirname, 'index.html'));
-      server.close();
+    } else {
+      res.statusCode = 404;
+      res.end('Not Found');
     }
-  })
+  });
 
   server.listen(3000, () => {
     console.log('Server started at http://localhost:3000');
