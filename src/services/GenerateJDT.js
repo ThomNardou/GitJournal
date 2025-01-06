@@ -39,62 +39,39 @@ const generateJDT = async (commitList, reposName) => {
 
     for (let commit of commitList) {
 
-        // console.log(commit);
-        let commitName = "";
-        let commitDescription = "";
-        let JDTInfos = "";
-        let workComment = "";
-        let message = commit.commit.message.split("\n");
+        const commitArray = commit.commit.message.split("\n");
 
-        let workInfos = {
-            time: "",
-            status: "",
-            issue: "",
-        }
-
-        console.log("message : ", message);
-
-        if (message.length > 1) {
-            commitName = message[0];
-            commitDescription = message[2];
+        const commitTitle = commitArray[0];
+        const commitDescription = commitArray[2] ? commitArray[2] : null;
+        if (!commitDescription) {
+            ROWS.push([
+                {value: commit.commit.author.name, type: String},
+                {value: commit.commit.author.date, type: String},
+                {value: commitTitle, type: String},
+                {value: "Non traité", type: String},
+                {value: "Non traité", type: String},
+                {value: "Non Indiqué", type: String}
+            ])
         }
         else {
-            commitName = message[0];
-            workInfos.time = "Non indiqué";
-            workInfos.status = "Non indiqué";
-            workInfos.issue = "Non indiqué";
+
+
+            const splitDescription = commitDescription.split(" ");
+            console.log("COMMENT PART : ", splitDescription);
+
+            const infosPart = splitDescription[0].split("-");
+            const commentPart = splitDescription.slice(1).join(" ").toString();
+
+
+            ROWS.push([
+                {value: commit.commit.author.name, type: String},
+                {value: commit.commit.author.date, type: String},
+                {value: commitTitle, type: String},
+                {value: infosPart[1], type: String},
+                {value: infosPart[0], type: String},
+                {value: commentPart ? commentPart : "Non indiqué", type: String}
+            ])
         }
-
-        if (commitDescription) {
-            const jdts = commitDescription.split(" ");
-            if (jdts.length > 1) {
-                JDTInfos = jdts[0];
-                workComment = jdts.slice(1).join(" ") ? jdts.slice(1).join(" ") : "Non indiqué";
-                workInfos.time = JDTInfos.split("-")[0];
-                workInfos.status = JDTInfos.split("-")[1];
-                workInfos.issue = JDTInfos.split("-")[2] ? JDTInfos.split("-")[2] : "Non indiqué";
-            }
-        }
-
-        // let statusArray = status.split(" ");
-        // status = statusArray[0]
-        //
-        // if (statusArray.length > 1) {
-        //     comment = statusArray.slice(1).join(" ");
-        // }
-        // else {
-        //     status = "Non indiqué";
-        //     comment = "Non indiqué";
-        // }
-
-        ROWS.push([
-            { value: commit.commit.author.name, type: String },
-            { value: commit.commit.author.date, type: String },
-            { value: commitName, type: String },
-            { value: workInfos.status, type: String },
-            { value: workInfos.status, type: String },
-            { value: workComment, type: String }
-        ]);
     }
 
     const DATA = [HEADER_ROW, ...ROWS]
