@@ -43,32 +43,37 @@ const generateJDT = async (commitList, reposName) => {
 
         const commitTitle = commitArray[0];
         const commitDescription = commitArray[2] ? commitArray[2] : null;
+
         if (!commitDescription) {
             ROWS.push([
                 {value: commit.commit.author.name, type: String},
                 {value: commit.commit.author.date, type: String},
                 {value: commitTitle, type: String},
-                {value: "Non traité", type: String},
-                {value: "Non traité", type: String},
+                {value: "Non indiqué", type: String},
+                {value: "Non indiqué", type: String},
                 {value: "Non Indiqué", type: String}
             ])
         }
         else {
 
+            let splitDescription = commitDescription.split(" ");
+            let infosPart = splitDescription[0].split("-");
+            let commentPart = splitDescription.slice(1).join(" ").toString();
 
-            const splitDescription = commitDescription.split(" ");
-            console.log("COMMENT PART : ", splitDescription);
+            if (commitArray.length > 3) {
+                infosPart = commitArray[2] ? commitArray[2] : "Non indiqué";
+                commentPart = commitArray[4] ? commitArray[4] : "Non indiqué";
+            }
 
-            const infosPart = splitDescription[0].split("-");
-            const commentPart = splitDescription.slice(1).join(" ").toString();
+
 
 
             ROWS.push([
                 {value: commit.commit.author.name, type: String},
                 {value: commit.commit.author.date, type: String},
                 {value: commitTitle, type: String},
-                {value: infosPart[1], type: String},
-                {value: infosPart[0], type: String},
+                {value: infosPart[1] ? infosPart[1] : "Non indiqué", type: String},
+                {value: infosPart[0] ? infosPart[0] : "Non indiqué", type: String},
                 {value: commentPart ? commentPart : "Non indiqué", type: String}
             ])
         }
