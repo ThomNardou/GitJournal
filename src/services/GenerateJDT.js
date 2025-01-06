@@ -61,8 +61,12 @@ const generateJDT = async (commitList, reposName) => {
             let commentPart = splitDescription.slice(1).join(" ").toString();
 
             if (commitArray.length > 3) {
-                infosPart = commitArray[2] ? commitArray[2] : "Non indiqué";
+                infosPart = commitArray[2] ? commitArray[2].split("-") : "Non indiqué";
                 commentPart = commitArray[4] ? commitArray[4] : "Non indiqué";
+
+                console.log("commitArray : ", commitArray);
+                console.log("infosPart : ", infosPart);
+                console.log("commentPart : ", commentPart);
             }
 
 
