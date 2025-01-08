@@ -18,7 +18,7 @@ if (started) {
   app.quit();
 }
 
-const startServer = (mainWindow) => {
+const startServer = (mainWindow, codeVerifier) => {
   const server = http.createServer(async (req, res) => {
     if (req.url?.startsWith('/redirect')) {
       const url = new URL(req.url, 'http://localhost:3000');
@@ -36,6 +36,8 @@ const startServer = (mainWindow) => {
           code: token,
           redirect_uri: 'http://localhost:3000/redirect',
         });
+
+        console.log('Token generated successfully:', code);
 
         TOKEN = code.token.access_token;
 
