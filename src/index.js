@@ -37,7 +37,7 @@ const startServer = (mainWindow, codeVerifier) => {
           redirect_uri: 'http://localhost:3000/redirect',
         });
 
-        console.log('Token generated successfully:', code);
+        console.log('Token generated successfully:');
 
         TOKEN = code.token.access_token;
 
@@ -70,7 +70,7 @@ app.on('ready', () => {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.cjs'),
-      devTools: true
+      devTools: false
     },
   });
 

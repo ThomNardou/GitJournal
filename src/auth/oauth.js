@@ -3,17 +3,16 @@ import { Octokit } from "@octokit/rest";
 import dotenv from "dotenv";
 import { AuthorizationCode } from 'simple-oauth2';
 import { startServer } from "../index.js"
-import { generateCodeChallenge, generateCodeVerifier } from "../services/CryptoUtils.js"
-import * as crypto from "node:crypto";
 
 dotenv.config();
 
-const clientID = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
+const clientID = "";
+const clientSecret = "";
 
 const auth = new AuthorizationCode({
   client: {
-    id: "Ov23lijeQw4DF0TWyBiV"
+    id: clientID,
+    secret: clientSecret
   },
   auth: {
     tokenHost: "https://github.com",

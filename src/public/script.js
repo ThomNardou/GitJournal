@@ -17,19 +17,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         reposName.textContent = repo.name;
         reposDescription.textContent = repo.description ? repo.description : "Il n'y a pas de description pour ce repos";
         status.textContent = ""
+        status.style.display = 'none'
 
         generateJDT.textContent = "Générer le JDT";
         generateJDT.addEventListener('click', async () => {
+            status.style.display = 'block'
             status.textContent = "Génération en cours..."
             const obj = {
                 name: repo.name,
                 owner: repo.owner.login
             }
-            const messageGenerate = await window.ipcRenderer.invoke("get-commits", obj)
-            status.textContent = messageGenerate;
+            status.textContent = await window.ipcRenderer.invoke("get-commits", obj);
 
             setInterval(() => {
                 status.textContent = ""
+                status.style.display = 'none'
             }, 3000)
 
         })
