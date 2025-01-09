@@ -41,3 +41,15 @@ ou
 ```
 git commit -m "<titre>" -m "<temps>-<état>-<issue>" -m "<commentaire>"
 ```
+
+
+### Fonctionnalités :
+
+|      Nom      |      État     |
+| ------------- | ------------- |
+| Connexion avec Github  | ✅ |
+| Système de recherche  | 🚧 |
+| Affichage du temps total dans l'excel  | ❌ |
+
+
+Des idées de fonctionnalité ? ouvrez une issue
