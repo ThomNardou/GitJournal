@@ -18,7 +18,7 @@ if (started) {
   app.quit();
 }
 
-const startServer = (mainWindow, codeVerifier) => {
+const startServer = (mainWindow) => {
   const server = http.createServer(async (req, res) => {
     if (req.url?.startsWith('/redirect')) {
       const url = new URL(req.url, 'http://localhost:3000');
@@ -70,7 +70,7 @@ app.on('ready', () => {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.cjs'),
-      devTools: true
+      devTools: false
     },
   });
 
