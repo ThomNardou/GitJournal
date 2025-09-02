@@ -70,7 +70,7 @@ app.on('ready', () => {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.cjs'),
-      devTools: false
+      devTools: true
     },
   });
 

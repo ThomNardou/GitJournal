@@ -6,12 +6,28 @@ const GetAllRepos = async (access_token) => {
         auth: access_token,
     })
 
-    // TODO: Get all repos from the user
-    const res = await octokit.request("GET /user/repos", {
-        per_page: 100
-    })
+    let page = 1;
+    const allRepos = [];
 
-    return res
+    while (true) {
+        // TODO: Get all repos from the user
+        const res = await octokit.request("GET /user/repos", {
+            per_page: 100,
+            page: page,
+        })
+
+        allRepos.push(...res.data);
+
+        
+
+        if (res.data.length < 100) {
+            break;
+        }
+        page++;
+    }
+
+
+    return allRepos;
 }
 
 export {GetAllRepos}

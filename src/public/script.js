@@ -4,9 +4,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const reposList = document.getElementById('reposList');
 
     const repos = await window.ipcRenderer.invoke("get-repos")
-
-
-    for (let repo of repos.data) {
+    
+    for (let repo of repos) {
         const reposDiv = document.createElement('div');
         const reposName = document.createElement('h2')
         const reposDescription = document.createElement('p')
